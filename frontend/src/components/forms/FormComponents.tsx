@@ -16,7 +16,7 @@ interface TextAreaProps extends BaseProps {
   // Add any TextArea specific properties here
 }
 
-export const Lable = ({label}: {label: string}) => {
+export const Label = ({label}: {label: string}) => {
   return (
     <label className="block text-sm font-bold text-gray-100 mb-2">
       {label}
@@ -28,7 +28,7 @@ export const Lable = ({label}: {label: string}) => {
 export const InputField: FC<InputProps> = ({ id, label, type, value, onChange, placeholder }) => {
   return (
     <div className="mb-3">
-      <Lable label={label} />
+      <Label label={label} />
       <input
         id={id}
         type={type}
@@ -44,7 +44,7 @@ export const InputField: FC<InputProps> = ({ id, label, type, value, onChange, p
 export const TextArea: FC<TextAreaProps> = ({ id, label, value, onChange, placeholder }) => {
   return (
     <div className="mb-3">
-      <Lable label={label} />
+      <Label label={label} />
       <textarea
         id={id}
         value={value}
