@@ -15,7 +15,7 @@ Then to start the application run either of the following
 sh start.sh
 ```
 ```
-npm run dev
+pnpm run dev
 ```
 
 ### Backend
