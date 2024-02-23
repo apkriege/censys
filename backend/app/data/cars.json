@@ -1,0 +1,20 @@
+[
+  {
+    "team": "Red Bull",
+    "driver": "Max Verstappen",
+    "description": "3x champs Adrian Newey is a genius",
+    "color": "blue"
+  },
+  {
+    "team": "Ferrari",
+    "driver": "Charles Leclerc",
+    "description": "Not a complete wagon",
+    "color": "ferrari red"
+  },
+  {
+    "team": "Aston Martin",
+    "driver": "Sebastian Vettel",
+    "description": "Preseason speed late season busters",
+    "color": "green"
+  }
+]
