@@ -45,7 +45,9 @@ The API has the following endpoints:
 ## Testing
 I have built tests for the backend using Pytest. It will test all endpoints of the API with both valid and invalid inputs.
 To run the tests, execute the following command in the terminal in the `backend` directory:
-  `pytest app/test_main.py`
+```
+pytest app/test_main.py
+```
 
 I haven't built any tests for the frontend yet, but I would use Jest, React Testing Library, and Cypress to do so.
 
