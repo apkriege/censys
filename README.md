@@ -8,7 +8,7 @@ To run the application first open 2 terminal windows.
 ### Frontend
 In the first terminal window, navigate to the `frontend` directory and execute the following command in the terminal:
 ```
-npm install 
+pnpm install 
 ```
 Then to start the application run either of the following 
 ```
