@@ -27,7 +27,7 @@ class API {
   }
 
   // Get a single car for the api
-  public static async getCar(id:int): Promise<Car> {
+  public static async getCar(id: number): Promise<Car> {
     const response = await this.fetch('/cars/'+id);
     return response.json();
   }
