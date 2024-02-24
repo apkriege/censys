@@ -26,6 +26,12 @@ class API {
     return response.json();
   }
 
+  // Get a single car for the api
+  public static async getCar(id:int): Promise<Car> {
+    const response = await this.fetch('/cars/'+id);
+    return response.json();
+  }
+
   // Add a new car to the API
   public static async addCar(car: Car): Promise<any> {
     const response = await this.fetch('/cars', {
