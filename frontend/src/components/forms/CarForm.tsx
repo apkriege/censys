@@ -5,7 +5,8 @@ import API from "../../api/api";
 import Toast from "../app/Toast";
 
 interface CarFormProps {
-  car: Car | null;
+  // car: Car | null;
+  carId: number | null;
   reloadCars: () => void;
   closeForm: () => void;
 }
@@ -19,20 +20,27 @@ const initState = {
   color: "",
 };
 
-const CarForm: FC<CarFormProps> = ({ car, reloadCars, closeForm }) => {
+const CarForm: FC<CarFormProps> = ({ carId, reloadCars, closeForm }) => {
   const [formData, setFormData] = useState(initState as Car);
   const [toast, setToast] = useState({ type: "", message: "" });
 
-  // If a car is provided, set the form data to the car's values
+  // If a carId is provided, get the car data
   useEffect(() => {
-    if (car) {
-      setFormData(car);
+    console.log("Car ID: ", carId)
+    if (carId) {
+      getCar(carId);
     } else {
       setFormData(initState);
     }
 
     resetToast();
-  }, [car]);
+  }, [carId]);
+
+  // Get the car data from the API
+  const getCar = async (id: number) => {
+    const car = await API.getCar(id);
+    setFormData(car);
+  }
 
   // Update the form data when the user types
   const handleInputChange = (field: keyof Car, value: string) => {
@@ -47,7 +55,6 @@ const CarForm: FC<CarFormProps> = ({ car, reloadCars, closeForm }) => {
     e.preventDefault();
 
     try {
-
       // Check if any fields are empty
       const vals = Object.values(formData);
       if (vals.includes("")) {
@@ -56,11 +63,11 @@ const CarForm: FC<CarFormProps> = ({ car, reloadCars, closeForm }) => {
       }
 
       // If the car has an ID, update it. Otherwise, create a new car
-      if (car && car.id) {
-        console.log("Update car", formData);
+      if(carId) {
+        // Update car
         await API.updateCar(formData);
       } else {
-        console.log("Create car", formData);
+        // Add car
         await API.addCar(formData);
       }
 
@@ -96,7 +103,7 @@ const CarForm: FC<CarFormProps> = ({ car, reloadCars, closeForm }) => {
   return (
     <div className="bg-sky-950 border-2 border-sky-800 p-4 rounded-md">
       <div className="flex justify-between relative">
-        <h2 className="text-3xl mb-5">{car && car.id ? `Edit Car: ${car.team}` : "Add New Car"}</h2>
+        <h2 className="text-3xl mb-5">{carId ? `Edit Car: ${formData.team}` : "Add New Car"}</h2>
         <button
           onClick={handleCancel}
           className="text-2xl font-bold text-red-500 hover:text-red-700 absolute top-[-10px] right-0"

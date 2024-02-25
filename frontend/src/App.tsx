@@ -8,7 +8,7 @@ import f1 from "./assets/f1.png";
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [cars, setCars] = useState<Car[]>([]);
-  const [editCar, setEditCar] = useState<Car | null>(null);
+  const [editCarId, setEditCarId] = useState<number | null>(null);
 
   useEffect(() => {
     loadCars();
@@ -26,13 +26,10 @@ function App() {
 
   // Handle the edit button click
   const handleEditClick = (id: number): void => {
-    const carToEdit: Car | undefined = cars.find((car: Car) => car.id === id);
-    if (carToEdit) {
-      setEditCar(carToEdit);
-      
-      if (!isOpen) {
-        setIsOpen(true);
-      }
+    setEditCarId(id);
+
+    if (!isOpen) {
+      setIsOpen(true);
     }
   };
 
@@ -48,11 +45,17 @@ function App() {
 
   // Handle the add car button click
   const handleAddCarClick = () => {
-    setEditCar(null);
+    setEditCarId(null);
 
     if (!isOpen) {
       setIsOpen(true);
     }
+  };
+
+  // Close the form
+  const closeForm = () => {
+    setIsOpen(false);
+    setEditCarId(null);
   };
 
   return (
@@ -75,7 +78,7 @@ function App() {
         </div>
         <hr className="border-gray-400 border-t-2" />
 
-        <table className="table-auto border-spacing-2">
+        <table className="table-auto border-spacing-2 min-w-[700px]">
           <thead>
             <tr>
               <TableHeadCell>ID</TableHeadCell>
@@ -87,35 +90,42 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {cars.map((car: Car) => (
-              <tr key={car.id}>
-                <TableCell>{car.id}</TableCell>
-                <TableCell>{car.team}</TableCell>
-                <TableCell>{car.driver}</TableCell>
-                <TableCell>{car.description}</TableCell>
-                <TableCell>
-                  <span className="capitalize">{car.color}</span>
-                </TableCell>
-                <TableCell>
-                  <ActionButton color="sky" onClick={() => handleEditClick(car.id)}>
-                    Edit
-                  </ActionButton>
-                  <ActionButton color="red" onClick={() => handleDeleteClick(car.id)}>
-                    Delete
-                  </ActionButton>
-                </TableCell>
+            {cars.length === 0 ? (
+              <tr>
+                <TableCell>No cars found</TableCell>
               </tr>
-            ))}
+            ) : (
+              <>
+                {cars.map((car: Car) => (
+                  <tr key={car.id}>
+                    <TableCell>{car.id}</TableCell>
+                    <TableCell>{car.team}</TableCell>
+                    <TableCell>{car.driver}</TableCell>
+                    <TableCell>{car.description}</TableCell>
+                    <TableCell>
+                      <span className="capitalize">{car.color}</span>
+                    </TableCell>
+                    <TableCell>
+                      <ActionButton color="sky" onClick={() => handleEditClick(car.id)}>
+                        Edit
+                      </ActionButton>
+                      <ActionButton color="red" onClick={() => handleDeleteClick(car.id)}>
+                        Delete
+                      </ActionButton>
+                    </TableCell>
+                  </tr>
+                ))}
+              </>
+            )}
           </tbody>
         </table>
 
         <div className="mt-5">
           <div
-            className={`mt-4 transition-all duration-500 ease-in-out ${
-              isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-            }`}
+            className={`mt-4 transition-all duration-500 ease-in-out ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+              }`}
           >
-            <CarForm car={editCar} reloadCars={loadCars} closeForm={() => setIsOpen(false)}/>
+            <CarForm carId={editCarId} reloadCars={loadCars} closeForm={closeForm} />
           </div>
         </div>
       </div>
