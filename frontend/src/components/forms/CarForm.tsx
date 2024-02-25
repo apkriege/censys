@@ -26,7 +26,6 @@ const CarForm: FC<CarFormProps> = ({ carId, reloadCars, closeForm }) => {
 
   // If a carId is provided, get the car data
   useEffect(() => {
-    console.log("Car ID: ", carId)
     if (carId) {
       getCar(carId);
     } else {
